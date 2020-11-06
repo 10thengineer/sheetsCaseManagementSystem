@@ -1,0 +1,25 @@
+// @OnlyCurrentDoc
+function onOpen(){
+  SpreadsheetApp.getUi()
+  .createMenu("Phoenix Database")
+  .addItem("Activate Database", "showUserForm")
+  .addToUi();
+}
+function showUserForm() {
+  var template = HtmlService.createTemplateFromFile("Entry UI");
+  
+  var html = template.evaluate();
+  html.setTitle("User Form Basics").setHeight(500).setWidth(800);//
+  SpreadsheetApp.getUi().showModalDialog(html,"Add Phoenix Shelter Friends");
+  //showSidebar(html);
+  
+}
+
+
+function appendData(data){
+  var ws = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Data");
+  ws.appendRow([data.nameF,data.nameL,data.workerNotes]);
+}
+function errorMessage(){
+  // Browser.msgBox("Name & Phone are required");
+}
