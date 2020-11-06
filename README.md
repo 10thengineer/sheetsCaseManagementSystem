@@ -1,0 +1,2 @@
+# sheetsCaseManagmentSystem
+I'm volunteering for a homeless shelter, and the social worker there wanted a simple case management system for them to manage their clients there. There are case management systems out there, but for those who cannot afford those subscription based programs, this is meant to be a type of transition software until they are able to get a better case management system should they need it. This is focused on functioning for smaller organizations and uses Google Sheets along with Google Apps Script.
