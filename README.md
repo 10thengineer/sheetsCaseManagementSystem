@@ -14,5 +14,7 @@ Instructions:
 5. Click on File> New > HTML file.
 6. Copy and paste the code from the databaseInterface file here to the new HTML file.
 7. Save the file.
+8. In the databaseFunctions code, make sure to change to names that it tells you to in the comments.
+9. Save the file.
 
 There should now be a new menu option that will activate the database interface at the top.
