@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!-- Compiled and minified CSS -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+
+    <body>
+    <div class= "container">
+    
+      <div class="row">
+        <div class="input-field col s12">
+          <i class="material-icons prefix">account_circle</i>
+          <input id="firstName" type="text" class="validate">
+          <label for="firstName">First Name</label>
+        </div>
+        <div class="input-field col s12">
+          <i class="material-icons prefix"></i>
+          <input id="lastName" type="text" class="validate">
+          <label for="lastName">Last Name</label>
+        </div>
+        <div class="input-field col s12">
+          <i class="material-icons prefix"></i>
+          <input id="notes" type="text" class="validate">
+          <label for="notes">Notes</label>
+        </div>
+         <div class="input-field col s12">
+          <button class="btn waves-effect waves-light" id = "btn">Add
+             <i class="material-icons right">send</i>
+          </button>
+        </div>
+      </div><!-- END ROW-->
+    
+    </div>
+
+     
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+    var firstNameBox = document.getElementById("firstName");
+    var lastNameBox = document.getElementById("lastName");
+    var notesBox = document.getElementById("notes");
+    //add here 1
+    document.getElementById("btn").addEventListener("click",addRecord);
+    function addRecord(){
+       var nameF = firstNameBox.value;
+       var nameL= lastNameBox.value;
+       var workerNotes = notesBox.value;
+       //add here if required 1.1
+       if (nameF.trim().length == 0 || nameL.trim().length==0){//add here if required 1.2
+         //google.script.run.errorMessage();
+         //handle error
+         M.toast ({html: 'First & Last name are required'});
+       } else{
+       var data = {
+         nameF: firstNameBox.value,
+         nameL: lastNameBox.value,
+         workerNotes: notesBox.value
+         //add here 2 
+       };
+       
+       google.script.run.appendData(data);
+       firstNameBox.value="";
+       lastNameBox.value="";
+       notesBox.value="";
+       
+       //add here 3
+       
+       }//CLOSE ELSE
+    }//CLOSE ADD RECORD
+
+    
+    
+    
+    </script>
+    </body>
+  </html>
+        
