@@ -6,7 +6,7 @@ function onOpen(){
   .addToUi();
 }
 function showUserForm() {
-  var template = HtmlService.createTemplateFromFile("Entry UI");
+  var template = HtmlService.createTemplateFromFile("Entry UI"); //IMPORTANT: the name here should be the name of your HTML file that you make. 
   
   var html = template.evaluate();
   html.setTitle("User Form Basics").setHeight(500).setWidth(800);//
@@ -17,7 +17,7 @@ function showUserForm() {
 
 
 function appendData(data){
-  var ws = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Data");
+  var ws = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Data"); //IMPORTANT: the name here should be the name of your active sheet (the tab at the bottom).
   ws.appendRow([data.nameF,data.nameL,data.workerNotes]);
 }
 function errorMessage(){
