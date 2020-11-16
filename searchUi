@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <!--For search table-->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+     
+      <!--For search table-->
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+      <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!-- Compiled and minified CSS -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+
+    <body>
+    <div class= "container">
+    
+     <div class="row">
+
+
+      <!--NEW-->
+        <div class="col">
+          <button class="btn waves-effect waves-light" id = "searchBtn">Search
+             <i class="material-icons right">search</i>
+          </button>
+        </div>
+        <div class="col">
+          <button class="btn waves-effect waves-light" id = "addBtn">Add
+             <i class="material-icons right">add</i>
+          </button>
+        </div>
+       </div> <!-- ROW END-->
+      <!--NEW-->
+
+     <div class="row">
+
+        <div class="input-field col s4">
+          <i class="material-icons prefix">account_circle</i>
+          <input id="firstName" type="text" class="validate">
+          <label for="firstName">First Name</label>
+        </div>
+        <div class="input-field col s4">
+          <i class="material-icons prefix"></i>
+          <input id="lastName" type="text" class="validate">
+          <label for="lastName">Last Name</label>
+        </div>
+        
+         <div class="input-field col s4">
+          <button class="btn waves-effect waves-light" id = "enterBtn">Enter
+             <i class="material-icons right">search</i>
+          </button>
+        </div>
+        
+      </div><!-- END ROW-->
+    
+    </div> <!-- END CONTAINER-->
+     
+<style><!--START  TABLE CODE-->
+    th{ 
+        color:#fff;
+            }
+</style>
+
+<table class="table table-striped">
+           <tr  class="bg-info">
+           <th>Name</th>
+           <th>Age</th>
+           <th>Birthday</th>
+           </tr>
+
+           <tbody id="myTable">
+        
+           </tbody>
+         </table>
+
+<script>
+	var myArray = [
+	    {'name':'Michael', 'age':'30', 'birthdate':'11/10/1989'},
+	    {'name':'Mila', 'age':'32', 'birthdate':'10/1/1989'},
+	    {'name':'Paul', 'age':'29', 'birthdate':'10/14/1990'},
+	    {'name':'Dennis', 'age':'25', 'birthdate':'11/29/1993'},
+	    {'name':'Tim', 'age':'27', 'birthdate':'3/12/1991'},
+	    {'name':'Erik', 'age':'24', 'birthdate':'10/31/1995'},
+        {'name':'Erik', 'age':'24', 'birthdate':'10/31/1995'},
+        {'name':'Erik', 'age':'24', 'birthdate':'10/31/1995'},
+        {'name':'Erik', 'age':'24', 'birthdate':'10/31/1995'},
+        {'name':'Erik', 'age':'24', 'birthdate':'10/31/1995'},
+        {'name':'Erik', 'age':'24', 'birthdate':'10/31/1995'},
+        {'name':'Erik', 'age':'24', 'birthdate':'10/31/1995'},
+        {'name':'Erik', 'age':'24', 'birthdate':'10/31/1995'},
+       
+	]
+	
+	buildTable(myArray)
+
+
+
+	function buildTable(data){
+		var table = document.getElementById('myTable')
+
+		for (var i = 0; i < data.length; i++){
+			var row = `<tr>
+							<td>${data[i].name}</td>
+							<td>${data[i].age}</td>
+							<td>${data[i].birthdate}</td>
+					  </tr>`
+			table.innerHTML += row
+
+
+		}
+	}
+
+</script> <!--END TABLE CODE-->
+     
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+    var firstNameBox = document.getElementById("firstName");
+    var lastNameBox = document.getElementById("lastName");
+    var notesBox = document.getElementById("notes");
+    //add here 1
+    //document.getElementById("enterBtn").addEventListener("click",addRecord);
+    document.getElementById("addBtn").addEventListener("click",addTrigger);
+       
+       function addTrigger(){
+         google.script.run.addForm();
+         }
+    
+
+    
+    
+    
+    </script>
+    </body>
+  </html>
+        
