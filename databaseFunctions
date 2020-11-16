@@ -27,6 +27,28 @@ function searchForm() {
 
 
 function appendData(data){
-  var ws = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Data");
+ var ws = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
   ws.appendRow([data.nameF,data.nameL,data.workerNotes]);
 }
+// NEW
+
+function searchUpdate(){
+  Logger.clear();
+    var datasheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var dataValues = datasheet.getDataRange().getValues();
+//  Logger.log(dataValues[1][1]);
+  var myArray= [];
+    for (var k = 0; k < dataValues.length; k++){
+       myArray.push({'name':dataValues[k][0],'age':dataValues[k][1],'birthdate':dataValues[k][2]});
+    }
+  
+}
+function getData(){
+   var datasheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var dataValues = datasheet.getDataRange().getValues();
+  return dataValues;
+}
+/*References:
+https://www.youtube.com/watch?v=4Hz36tiqEPE
+
+*/
