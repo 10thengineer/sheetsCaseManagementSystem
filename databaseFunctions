@@ -2,24 +2,31 @@
 function onOpen(){
   SpreadsheetApp.getUi()
   .createMenu("Phoenix Database")
-  .addItem("Activate Database", "showUserForm")
+  .addItem("Activate Database", "searchForm")
   .addToUi();
 }
-function showUserForm() {
-  var template = HtmlService.createTemplateFromFile("Entry UI"); //IMPORTANT: the name here should be the name of your HTML file that you make. 
+function addForm() {
+  var addTemplate = HtmlService.createTemplateFromFile("Entry UI");
   
-  var html = template.evaluate();
-  html.setTitle("User Form Basics").setHeight(500).setWidth(800);//
-  SpreadsheetApp.getUi().showModalDialog(html,"Add Phoenix Shelter Friends");
+  var addHtml = addTemplate.evaluate();
+  addHtml.setHeight(500).setWidth(800);//
+  SpreadsheetApp.getUi().showModalDialog(addHtml,"Add Phoenix Shelter Friends");
+  //showSidebar(html);
+  
+}
+function searchForm() {
+          
+  var searchTemplate = HtmlService.createTemplateFromFile("searchUI");
+  
+  var searchHtml = searchTemplate.evaluate();
+  searchHtml.setHeight(500).setWidth(800);//
+  SpreadsheetApp.getUi().showModalDialog(searchHtml,"Search Phoenix Shelter Friends");
   //showSidebar(html);
   
 }
 
 
 function appendData(data){
-  var ws = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Data"); //IMPORTANT: the name here should be the name of your active sheet (the tab at the bottom).
+  var ws = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Data");
   ws.appendRow([data.nameF,data.nameL,data.workerNotes]);
-}
-function errorMessage(){
-  // Browser.msgBox("Name & Phone are required");
 }
