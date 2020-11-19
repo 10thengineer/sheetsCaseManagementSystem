@@ -1,4 +1,11 @@
 // @OnlyCurrentDoc
+/*ISSUES TO FIX
+When entering a date,such as 10/10/2020, google makes it into its own special datatype- 
+the way the search function is set up, any dates in this format causes the 
+displayed items to stop working. However adding a single character such as 10/10/2020c 
+will let it work again because google only recognizes that as a string (I think).
+Display will not work if there is no data in birthday column
+*/
 function onOpen(){
   SpreadsheetApp.getUi()
   .createMenu("Phoenix Database")
@@ -45,10 +52,13 @@ function searchUpdate(){
 }
 function getData(){
    var datasheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-    var dataValues = datasheet.getDataRange().getValues();
+   var rowBound = datasheet.getLastRow()-2;
+   var columnBound = datasheet.getLastColumn();
+   var dataValues = datasheet.getRange(3,1,rowBound,columnBound).getValues();
   return dataValues;
 }
 /*References:
 https://www.youtube.com/watch?v=4Hz36tiqEPE
+https://www.youtube.com/watch?v=Q9aYU1Ufkpk
 
 */
