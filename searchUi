@@ -38,23 +38,12 @@
 
      <div class="row">
 
-        <div class="input-field col s4">
-          <i class="material-icons prefix">account_circle</i>
-          <input id="firstName" type="text" class="validate">
-          <label for="firstName">First Name</label>
+        <div class="input-field col s12">
+          <i class="material-icons prefix">search</i>
+          <input id="search-input" type="text" class="validate">
+          <label for="search-input">Name</label>
         </div>
-        <div class="input-field col s4">
-          <i class="material-icons prefix"></i>
-          <input id="lastName" type="text" class="validate">
-          <label for="lastName">Last Name</label>
-        </div>
-        
-         <div class="input-field col s4">
-          <button class="btn waves-effect waves-light" id = "enterBtn">Enter
-             <i class="material-icons right">search</i>
-          </button>
-        </div>
-        
+      
       </div><!-- END ROW-->
     
     </div> <!-- END CONTAINER-->
@@ -78,11 +67,24 @@
          </table>
 
 <script>
-//get google sheet data
-    google.script.run.withSuccessHandler(buildTable).getData();
+    //get google sheet data
+// var myArray = google.script.run.getData();
+// buildTable(myArray);
+ google.script.run.withSuccessHandler(setArray).getData();
  //build table of entries
+  var myArray = [];
+
+ function setArray(sheetsData){
+   myArray = sheetsData;
+   buildTable(myArray);
+ }
+    
+
+
 	function buildTable(tableData){
-		var table = document.getElementById('myTable')
+		var table = document.getElementById('myTable');
+        table.innerHTML='';
+
 
 		for (var i = 0; i < tableData.length; i++){
         
@@ -91,21 +93,40 @@
 							<td>${tableData[i][1]}</td>
 							<td>${tableData[i][2]}</td>
 					  </tr>`
-			table.innerHTML += row
-          
-        
+			table.innerHTML += row;
       }
 	}
+
+$('#search-input').on('keyup',function(){
+var value = $(this).val();
+var sData = searchTable(value,myArray);
+//console.log(myArray);
+buildTable(sData);
+})
+    
+    function searchTable(value,data){
+    var filteredData= [];
+    
+    for (var i = 0; i < data.length; i++){
+      value = value.toLowerCase();
+      var name = data[i][0].toLowerCase();
+      if (name.includes(value)){
+        filteredData.push(data[i]);
+        }
+      }
+      return filteredData;
+    }
+    
 
 </script> <!--END TABLE CODE-->
      
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
-    var firstNameBox = document.getElementById("firstName");
+    /*var firstNameBox = document.getElementById("firstName");
     var lastNameBox = document.getElementById("lastName");
     var notesBox = document.getElementById("notes");
-    //add here 1
+    //add here 1*/
     //document.getElementById("enterBtn").addEventListener("click",addRecord);
     document.getElementById("addBtn").addEventListener("click",addTrigger);
        
