@@ -2,10 +2,10 @@
 <!--NEXT: DO getElementsByName FUNCTION TO OPERATE BUTTONS-->
   <html>
     <head>
-     
+
       <!--For search table-->
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-     
+
       <!--For search table-->
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
@@ -20,7 +20,7 @@
 
     <body>
     <div class= "container">
-    
+
      <div class="row">
 
 
@@ -45,13 +45,13 @@
           <input id="search-input" type="text" class="validate">
           <label for="search-input">Name</label>
         </div>
-      
+
       </div><!-- END ROW-->
-    
+
     </div> <!-- END CONTAINER-->
-     
+
 <style><!--START  TABLE CODE-->
-    th{ 
+    th{
         color:#fff;
             }
 </style>
@@ -62,41 +62,37 @@
 
            <th>First Name</th>
            <th>Last Name</th>
-           <th>Notes</th>
+           <th>DOB</th>
 
            </tr>
 
            <tbody id="myTable">
-        
+
            </tbody>
          </table>
-         
+
 
 
 <script>
-    //get google sheet data
-// var myArray = google.script.run.getData();
-// buildTable(myArray);
- google.script.run.withSuccessHandler(setArray).getData();
- //build table of entries
+  //get google sheet data
+  google.script.run.withSuccessHandler(setArray).getData();
+  //build table of entries
   var myArray = [];
   var searchObject={};
- function setArray(sheetsData){
-   myArray = sheetsData;
-   //console.log(typeof sheetsData);
-  // console.log(sheetsData);
-   buildTable(myArray);
- }
+  function setArray(sheetsData){
+    myArray = sheetsData;
+    buildTable(myArray);
+  }
 
 
 	function buildTable(tableData){
 		var table = document.getElementById('myTable');
         table.innerHTML='';
-        
-//console.log(blahblah);
-		for (var p = 0; p < tableData.length; p++){
+
+        console.log('in buildTable(), tableData is :' + tableData);
+		for (var p = 0; tableData && p < tableData.length; p++) {
             var idName= "row" + p;
-            
+
 			var row = `<tr>
             <td><button class="btn waves-effect waves-light" name = "entry" id = "${idName}">Select
                                <i class="material-icons right">play_arrow</i>
@@ -104,43 +100,28 @@
 							<td>${tableData[p][1]}</td>
 							<td>${tableData[p][2]}</td>
 							<td>${tableData[p][3]}</td>
-                       		
- 
 					  </tr>`
-                      //console.log(row);
-                      
 			table.innerHTML += row;
-            //activateButton(idName);
-            //tableData[p].push(idName);//HERE.
-            searchObject[idName] = "A" + tableData[p][0] + ":D" + tableData[p][0] ;
-           // console.log(idName);
-            //console.log(searchObject[idName]);
-           
-            
+
+            searchObject[idName] = "A" + tableData[p][0] + ":E" + tableData[p][0] ;
+
         }
-     
-      /*var elems = document.getElementsByClassName("entries");
-      console.log(elems);
-     elems[0].addEventListener("click",editTrigger,false);
-*/
+
      var elems = document.getElementsByName("entry");
      for(var i = 0; i < elems.length; i++) {
        elems[i].addEventListener("click",editTrigger,false);
-      // console.log('test');
-       }
-      // console.log(searchObject.row0)*/
-	  }
+     }
+   }
 
 $('#search-input').on('keyup',function(){
 var value = $(this).val();
 var sData = searchTable(value,myArray);
-//console.log(myArray);
 buildTable(sData);
 })
-    
+
     function searchTable(value,data){
     var filteredData= [];
-    
+
     for (var i = 0; i < data.length; i++){
       value = value.toLowerCase();
       var name = data[i][1].toLowerCase();
@@ -150,10 +131,10 @@ buildTable(sData);
       }
       return filteredData;
     }
-    
+
 
 </script> <!--END TABLE CODE-->
-     
+
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
@@ -168,59 +149,42 @@ buildTable(sData);
          google.script.run.addForm();
 
          }
-         
+
        function editTrigger(e){
-       /*var clickedItem = undefined;
-       if (e.target != e.currentTarget){
-          clickedItem
-          }*/
-          var  clickedItem = e.currentTarget.id;
-          //console.log(clickedItem);
-          var selectedEntry=searchObject[clickedItem];
-          //console.log(searchObject[clickedItem])
-         if (selectedEntry == undefined)
-         {
+         var  clickedItem = e.currentTarget.id;
+         var selectedEntry=searchObject[clickedItem];
+         if (selectedEntry == undefined) {
                   M.toast ({html: 'Please Wait. Background data is loading'});
 
+         } else {
+           google.script.run.editForm(selectedEntry);
          }
-          else{
-          
-          google.script.run.editForm(selectedEntry);
-          //console.log(selectedEntry);
 
-          }
-       /*if (e.target !== e.currentTarget){
-          var clickedItem = e.target.id;
-          google.script.run.editForm(clickedItem);
-          console.log('test success');
-          }*/
 
-       
        e.stopPropagation;
        }
-       
-      /* 
+
+      /*
        function activateButton(rowIndex){
        //TESTING ENTRY SELECT BUTTONS
-       
-       
+
+
 
     document.getElementById(rowIndex).addEventListener("click",editTrigger);
 
-       
+
        }*/
         //.target.id method is handy!
-  
-        
-        
-         
-    
 
-    
-    
-    
+
+
+
+
+
+
+
+
     </script>
-    
+
     </body>
   </html>
-        
