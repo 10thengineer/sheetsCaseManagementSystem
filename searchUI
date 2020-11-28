@@ -1,6 +1,8 @@
 <!DOCTYPE html>
+<!--NEXT: DO getElementsByName FUNCTION TO OPERATE BUTTONS-->
   <html>
     <head>
+     
       <!--For search table-->
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
      
@@ -56,15 +58,20 @@
 
 <table class="table table-striped">
            <tr  class="bg-info">
+           <th></th>
+
            <th>Name</th>
            <th>Age</th>
            <th>Birthday</th>
+
            </tr>
 
            <tbody id="myTable">
         
            </tbody>
          </table>
+         
+
 
 <script>
     //get google sheet data
@@ -73,29 +80,56 @@
  google.script.run.withSuccessHandler(setArray).getData();
  //build table of entries
   var myArray = [];
-
+  var searchObject={};
  function setArray(sheetsData){
    myArray = sheetsData;
+   //console.log(typeof sheetsData);
+  // console.log(sheetsData);
    buildTable(myArray);
  }
-    
 
 
 	function buildTable(tableData){
 		var table = document.getElementById('myTable');
         table.innerHTML='';
-
-
-		for (var i = 0; i < tableData.length; i++){
         
+//console.log(blahblah);
+		for (var p = 0; p < tableData.length; p++){
+            var idName= "row" + p;
+            
 			var row = `<tr>
-							<td>${tableData[i][0]}</td>
-							<td>${tableData[i][1]}</td>
-							<td>${tableData[i][2]}</td>
+            <td><button class="btn waves-effect waves-light" name = "entry" id = "${idName}">Select
+                               <i class="material-icons right">play_arrow</i>
+                               </button></td>
+							<td>${tableData[p][1]}</td>
+							<td>${tableData[p][2]}</td>
+							<td>${tableData[p][3]}</td>
+                       		
+ 
 					  </tr>`
+                      //console.log(row);
+                      
 			table.innerHTML += row;
-      }
-	}
+            //activateButton(idName);
+            //tableData[p].push(idName);//HERE.
+            searchObject[idName] = "A" + tableData[p][0] + ":D" + tableData[p][0] ;
+           // console.log(idName);
+            //console.log(searchObject[idName]);
+           
+            
+        }
+     
+      /*var elems = document.getElementsByClassName("entries");
+      console.log(elems);
+     elems[0].addEventListener("click",editTrigger,false);
+*/
+     var elems = document.getElementsByName("entry");
+     for(var i = 0; i < elems.length; i++) {
+       elems[i].addEventListener("click",editTrigger,false);
+      // console.log('test');
+       }
+      // console.log(searchObject.row0)*/
+	  }
 
 $('#search-input').on('keyup',function(){
 var value = $(this).val();
@@ -109,7 +143,7 @@ buildTable(sData);
     
     for (var i = 0; i < data.length; i++){
       value = value.toLowerCase();
-      var name = data[i][0].toLowerCase();
+      var name = data[i][1].toLowerCase();
       if (name.includes(value)){
         filteredData.push(data[i]);
         }
@@ -129,11 +163,56 @@ buildTable(sData);
     //add here 1*/
     //document.getElementById("enterBtn").addEventListener("click",addRecord);
     document.getElementById("addBtn").addEventListener("click",addTrigger);
-       
+
        function addTrigger(){
          google.script.run.addForm();
 
          }
+         
+       function editTrigger(e){
+       /*var clickedItem = undefined;
+       if (e.target != e.currentTarget){
+          clickedItem
+          }*/
+          var  clickedItem = e.currentTarget.id;
+          //console.log(clickedItem);
+          var selectedEntry=searchObject[clickedItem];
+          //console.log(searchObject[clickedItem])
+         if (selectedEntry == undefined)
+         {
+                  M.toast ({html: 'Please Wait. Background data is loading'});
+
+         }
+          else{
+          
+          google.script.run.editForm(selectedEntry);
+          //console.log(selectedEntry);
+
+          }
+       /*if (e.target !== e.currentTarget){
+          var clickedItem = e.target.id;
+          google.script.run.editForm(clickedItem);
+          console.log('test success');
+          }*/
+
+       
+       e.stopPropagation;
+       }
+       
+      /* 
+       function activateButton(rowIndex){
+       //TESTING ENTRY SELECT BUTTONS
+       
+       
+
+    document.getElementById(rowIndex).addEventListener("click",editTrigger);
+
+       
+       }*/
+        //.target.id method is handy!
+  
+        
+        
          
     
 
@@ -141,6 +220,7 @@ buildTable(sData);
     
     
     </script>
+    
     </body>
   </html>
         
