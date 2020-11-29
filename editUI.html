@@ -1,252 +1,199 @@
 <!DOCTYPE html>
-  <html>
-    <head>
-    <!--<style>
-    .hidden{
-        display: initial;
-        }
-    </style>-->
-      <!--Import Google Icon Font-->
-      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-      <!-- Compiled and minified CSS -->
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<html>
+  <head>
+  <!--<style>
+  .hidden{
+      display: initial;
+      }
+  </style>-->
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
-      <!--Let browser know website is optimized for mobile-->
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  </head>
 
-    <body>
-    
-   <div class= "container">
-      <div class="row">
-      
-      <!--NEW-->
-        <div class="input-field col">
-          <button class="btn waves-effect waves-light" id = "searchBtn">Search
-             <i class="material-icons right">search</i>
-          </button>
-        </div>
-        
+  <body>
+
+ <div class= "container">
+    <div class="row">
+
+    <!--NEW-->
+      <div class="input-field col">
+        <button class="btn waves-effect waves-light" id = "searchBtn">Search
+           <i class="material-icons right">search</i>
+        </button>
       </div>
-      <!--NEW-->
-      <div class="row black-text">
-      <div name = "entryField">
-       <div class="input-field col s12">
-         <input disabled value="Loading..." id="firstName" type="text" class="validate">
-          <label class="active" for="firstName">First Name</label>
-           </div>
-          </div>
-          
-           <div name = "entryField">
-           <div class="input-field col s12">
-          <input disabled value="Loading..." id="lastName" type="text" class="validate">
-          <label class="active" for="lastName">Last Name</label>
-           </div>
-          </div>
-          
-           <div name = "entryField">
-           <div class="input-field col s12">
-          <input disabled value="Loading..." id="notes" type="text" class="validate">
-          <label class="active" for="notes">Notes</label>
-          </div>
-          </div>
-         
-       </div>
-        
-        <div class="row">
-         <div class="input-field col">
-          <button class="btn waves-effect waves-light" id = "editBtn">Edit
-             <i class="material-icons right">edit</i>
-          </button>
+
+    </div>
+    <!--NEW-->
+    <div class="row black-text">
+    <div name = "entryField">
+     <div class="input-field col s12">
+       <input disabled value="Loading..." id="firstName" type="text" class="validate">
+        <label class="active" for="firstName">First Name</label>
+         </div>
         </div>
-        
+
+         <div name = "entryField">
+         <div class="input-field col s12">
+        <input disabled value="Loading..." id="lastName" type="text" class="validate">
+        <label class="active" for="lastName">Last Name</label>
+         </div>
+        </div>
+
+         <div name = "entryField">
+         <div class="input-field col s12">
+        <input disabled value="Loading..." id="dateOfBirth" type="text" class="validate">
+        <label class="active" for="dateOfBirth">DOB</label>
+         </div>
+        </div>
+
+         <div name = "entryField">
+         <div class="input-field col s12">
+        <input disabled value="Loading..." id="notes" type="text" class="validate">
+        <label class="active" for="notes">Notes</label>
+        </div>
+        </div>
+
+     </div>
+
+      <div class="row">
+       <div class="input-field col">
+        <button class="btn waves-effect waves-light" id = "editBtn">Edit
+           <i class="material-icons right">edit</i>
+        </button>
+      </div>
+
 <div class="input-field col">
-          <button class="btn waves-effect waves-light red lighten-2" id = "deleteBtn">Delete
-             <i class="material-icons right">delete</i>
-          </button>
-        </div>
-        
-      </div><!-- END ROW-->
-       <div class="row" name = "extraBtns">
-       </div>
-   </div> <!--END CONTAINER-->
-  
-          
-     
+        <button class="btn waves-effect waves-light red lighten-2" id = "deleteBtn">Delete
+           <i class="material-icons right">delete</i>
+        </button>
+      </div>
+
+    </div><!-- END ROW-->
+     <div class="row" name = "extraBtns">
+     </div>
+ </div> <!--END CONTAINER-->
+
+
+
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
-     google.script.run.withSuccessHandler(setEntry).selectedData();
-     google.script.run.withSuccessHandler(storeRange).selectedNotation()
-     var entryData = [];
-     var editState = false;
-     var storedRange = ""; //store selected range here. 
-     function storeRange(arange){
-     storedRange = arange;
+      google.script.run.withSuccessHandler(setEntry).selectedData();
+      google.script.run.withSuccessHandler(storeRange).selectedNotation()
+      var entryData = [];
+      var editState = false;
+      var storedRange = ""; //store selected range here.
+      function storeRange(arange){
+        storedRange = arange;
+      }
+      function setEntry(data){
+        var firstNameBox = document.getElementById("firstName");
+        var lastNameBox = document.getElementById("lastName");
+        var dateOfBirthBox = document.getElementById("dateOfBirth");
+        var notesBox = document.getElementById("notes");
+        console.log("setEntry() data ("+data[0].length+"): "+data);
+        firstNameBox.value = data[0][1];
+        lastNameBox.value = data[0][2];
+        dateOfBirthBox.value = data[0][3];
+        notesBox.value = data[0][4];
+        entryData=data;
+      }
 
-     }
-     function setEntry(data){
-     
-     //var test = document.getElementById("testing");
-    var firstNameBox = document.getElementById("firstName");
-    var lastNameBox = document.getElementById("lastName");
-    var notesBox = document.getElementById("notes");  
-     firstNameBox.value = data[0][1];
-     lastNameBox.value = data[0][2];
-     notesBox.value = data[0][3];
-     entryData=data;
-   //  console.log(typeof data[0][3].trim());
+      document.getElementById("searchBtn").addEventListener("click",searchTrigger);
+      document.getElementById("editBtn").addEventListener("click",editTrigger);
+      document.getElementById("deleteBtn").addEventListener("click",deleteTrigger);
+
+      function searchTrigger(){
+        if (editState == false){
+          google.script.run.searchForm();
+        } else{
+          M.toast ({html: 'Please save edits or cancel.'});
         }
-        
-    document.getElementById("searchBtn").addEventListener("click",searchTrigger);
-    document.getElementById("editBtn").addEventListener("click",editTrigger);
-    document.getElementById("deleteBtn").addEventListener("click",deleteTrigger);
-
-    function searchTrigger(){
-      if (editState == false){
-        google.script.run.searchForm();
       }
-      else{
-      M.toast ({html: 'Please save edits or cancel.'});
+
+      function editTrigger(){
+        editState = true;
+        var elems = document.getElementsByName("entryField");
+
+        var firstEdit = '<div class="input-field col s12"><input   id="firstName" type="text" class="validate"><label class="active" for="firstName">First Name</label></div>';
+        var lastEdit = '<div class="input-field col s12"><input  id="lastName" type="text" class="validate"><label class="active" for="lastName">Last Name</label></div>';
+        var dobEdit = '<div class="input-field col s12"><input  id="dateOfBirth" type="text" class="validate"><label class="active" for="dateOfBirth">DOB</label></div>';
+        var notesEdit = '<div class="input-field col s12"><input  id="notes" type="text" class="validate"><label class="active" for="notes">Notes</label></div>';
+
+        elems[0].innerHTML = firstEdit;
+        elems[1].innerHTML = lastEdit;
+        elems[2].innerHTML = dobEdit;
+        elems[3].innerHTML = notesEdit;
+
+        var extras = document.getElementsByName("extraBtns");
+
+        var saveButton= '<div class="input-field col"><button class="btn waves-effect waves-light" id = "saveBtn">Save<i class="material-icons right">save</i></button></div>'
+        var cancelButton= '<div class="input-field col"><button class="btn waves-effect waves-light red lighten-2" id = "cancelBtn">Cancel<i class="material-icons right">cancel</i></button></div>'
+        extras[0].innerHTML= saveButton + cancelButton;
+
+        document.getElementById("saveBtn").addEventListener("click",saveTrigger);
+        document.getElementById("cancelBtn").addEventListener("click",cancelTrigger);
+
+        setEntry(entryData);
       }
-      
-      }
-      
-      //HERE
-    function editTrigger(){
-     editState = true;
-     var elems = document.getElementsByName("entryField");
-  
-     var firstEdit = '<div class="input-field col s12"><input   id="firstName" type="text" class="validate"><label class="active" for="firstName">First Name</label></div>';
-       var lastEdit = '<div class="input-field col s12"><input  id="lastName" type="text" class="validate"><label class="active" for="lastName">Last Name</label></div>';
-     var notesEdit = '<div class="input-field col s12"><input  id="notes" type="text" class="validate"><label class="active" for="notes">Notes</label></div>';
 
-      elems[0].innerHTML = firstEdit;
-      elems[1].innerHTML = lastEdit;
-      elems[2].innerHTML = notesEdit;
-
-     
-     var extras = document.getElementsByName("extraBtns");
-     
-     var saveButton= '<div class="input-field col"><button class="btn waves-effect waves-light" id = "saveBtn">Save<i class="material-icons right">save</i></button></div>'
-     var cancelButton= '<div class="input-field col"><button class="btn waves-effect waves-light red lighten-2" id = "cancelBtn">Cancel<i class="material-icons right">cancel</i></button></div>'
-     extras[0].innerHTML= saveButton + cancelButton;
-     
-    document.getElementById("saveBtn").addEventListener("click",saveTrigger);
-    document.getElementById("cancelBtn").addEventListener("click",cancelTrigger);
-     
-            setEntry(entryData);
-
-          
-     }
-     
-    function deleteTrigger(){
-    if (editState == false){
-       // M.toast ({html: 'Entry Deleted'});    
-       // google.script.run.deleteCells(storedRange);
-      // google.script.run.searchForm();
-        google.script.run.showAlert(storedRange);
-      /*var confirmation = google.script.run.showAlert();
-      if (confirmation == true){
-        M.toast ({html: 'Entry Deleted'});    
-        google.script.run.deleteCells(storedRange);
-        google.script.run.searchForm();
+      function deleteTrigger(){
+        if (editState == false){
+            google.script.run.showAlert(storedRange);
+        } else {
+          M.toast({html: 'Please save edits or cancel.'});
         }
-       
-      if (confirmation == false) {
-      google.script.run.editReturn(storedRange);
-      }*/
-     
       }
-      else{
-      M.toast ({html: 'Please save edits or cancel.'});
+
+      function saveTrigger(){
+        editState= false;
+        var firstNameBox = document.getElementById("firstName");
+        var lastNameBox = document.getElementById("lastName");
+        var dateOfBirthBox = document.getElementById("dateOfBirth");
+        var notesBox = document.getElementById("notes");
+        entryData[0][1]= firstNameBox.value;
+        entryData[0][2] = lastNameBox.value;
+        entryData[0][3] = dateOfBirthBox.value;
+        entryData[0][4] = notesBox.value;
+        var extras = document.getElementsByName("extraBtns");
+        extras[0].innerHTML = "";
+
+
+        var elems = document.getElementsByName("entryField");
+        var firstReset ='  <div class="input-field col s12"><input disabled value="Loading..." id="firstName" type="text" class="validate"><label class="active" for="firstName">First Name</label></div></div>'
+        var lastReset = '  <div class="input-field col s12"><input disabled value="Loading..." id="lastName" type="text" class="validate"><label class="active" for="lastName">Last Name</label></div></div>'
+        var dateOfBirthReset = '  <div class="input-field col s12"><input disabled value="Loading..." id="dateOfBirth" type="text" class="validate"><label class="active" for="dateOfBirth">DOB</label></div></div>'
+        var notesReset = '  <div class="input-field col s12"><input disabled value="Loading..." id="notes" type="text" class="validate"><label class="active" for="notes">Notes</label></div></div>'
+        elems[0].innerHTML = firstReset;
+        elems[1].innerHTML = lastReset;
+        elems[2].innerHTML = dateOfBirthReset;
+        elems[3].innerHTML = notesReset;
+        setEntry(entryData);
+        M.toast ({html: 'Changes Saved'});
+        google.script.run.editData(entryData[0],storedRange);
       }
-    }
-    
-    function saveTrigger(){
-    editState= false;
-    var firstNameBox = document.getElementById("firstName");
-    var lastNameBox = document.getElementById("lastName");
-    var notesBox = document.getElementById("notes");  
-     entryData[0][1]= firstNameBox.value;
-     entryData[0][2] = lastNameBox.value;
-     entryData[0][3] = notesBox.value;
-     var extras = document.getElementsByName("extraBtns");
-     extras[0].innerHTML = "";
-     
-     
-     var elems = document.getElementsByName("entryField");
-     var firstReset ='  <div class="input-field col s12"><input disabled value="Loading..." id="firstName" type="text" class="validate"><label class="active" for="firstName">First Name</label></div></div>'  
-     var lastReset = '  <div class="input-field col s12"><input disabled value="Loading..." id="lastName" type="text" class="validate"><label class="active" for="lastName">Last Name</label></div></div>'
-     var notesReset = '  <div class="input-field col s12"><input disabled value="Loading..." id="notes" type="text" class="validate"><label class="active" for="notes">Notes</label></div></div>'
-     elems[0].innerHTML = firstReset;
-      elems[1].innerHTML = lastReset;
-      elems[2].innerHTML = notesReset;
-     // console.log(entryData[0]);
-      //console.log(typeof storedRange);
-     setEntry(entryData);
-     M.toast ({html: 'Changes Saved'});
-    google.script.run.editData(entryData[0],storedRange);
+      function cancelTrigger(){
+        editState= false;
 
-    }
-    function cancelTrigger(){
-      editState= false;
+        var extras = document.getElementsByName("extraBtns");
+        extras[0].innerHTML = "";
 
-     var extras = document.getElementsByName("extraBtns");
-     extras[0].innerHTML = "";
-     
-    var elems = document.getElementsByName("entryField");
-    var firstReset ='  <div class="input-field col s12"><input disabled value="Loading..." id="firstName" type="text" class="validate"><label class="active" for="firstName">First Name</label></div></div>'  
-     var lastReset = '  <div class="input-field col s12"><input disabled value="Loading..." id="lastName" type="text" class="validate"><label class="active" for="lastName">Last Name</label></div></div>'
-     var notesReset = '  <div class="input-field col s12"><input disabled value="Loading..." id="notes" type="text" class="validate"><label class="active" for="notes">Notes</label></div></div>'
-      elems[0].innerHTML = firstReset;
-      elems[1].innerHTML = lastReset;
-      elems[2].innerHTML = notesReset;
-     setEntry(entryData);
-    }
-
-    
-/*
-    
-    }
-/*
-   
-    //add here 1
-    document.getElementById("btn").addEventListener("click",addRecord);
-    
-    function addRecord(){
-       var nameF = firstNameBox.value;
-       var nameL= lastNameBox.value;
-       var workerNotes = notesBox.value;
-       //add here if required 1.1
-       if (nameF.trim().length == 0 || nameL.trim().length==0){//add here if required 1.2
-         //google.script.run.errorMessage();
-         //handle error
-         M.toast ({html: 'First & Last name are required'});
-       } else{
-       var data = {
-         nameF: firstNameBox.value,
-         nameL: lastNameBox.value,
-         workerNotes: notesBox.value
-         //add here 2 
-       };
-      
-
-       google.script.run.appendData(data);
-       firstNameBox.value="";
-       lastNameBox.value="";
-       notesBox.value="";
-       
-       //add here 3
-       M.toast({html: "New Entry Added"});
-       }//CLOSE ELSE
-       
-    }//CLOSE ADD RECORD*/
-
-    
-    
-    
+        var elems = document.getElementsByName("entryField");
+        var firstReset ='  <div class="input-field col s12"><input disabled value="Loading..." id="firstName" type="text" class="validate"><label class="active" for="firstName">First Name</label></div></div>'
+        var lastReset = '  <div class="input-field col s12"><input disabled value="Loading..." id="lastName" type="text" class="validate"><label class="active" for="lastName">Last Name</label></div></div>'
+        var dateOfBirthReset = '  <div class="input-field col s12"><input disabled value="Loading..." id="dateOfBirth" type="text" class="validate"><label class="active" for="dateOfBirth">DOB</label></div></div>'
+        var notesReset = '  <div class="input-field col s12"><input disabled value="Loading..." id="notes" type="text" class="validate"><label class="active" for="notes">Notes</label></div></div>'
+        elems[0].innerHTML = firstReset;
+        elems[1].innerHTML = lastReset;
+        elems[2].innerHTML = dateOfBirthReset;
+        elems[3].innerHTML = notesReset;
+        setEntry(entryData);
+      }
     </script>
-    </body>
-  </html>
-        
+  </body>
+</html>

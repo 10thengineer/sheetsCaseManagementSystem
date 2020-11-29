@@ -12,9 +12,9 @@
 
     <body>
     <div class= "container">
-    
+
       <div class="row">
-      
+
       <!--NEW-->
         <div class="input-field col s3">
           <button class="btn waves-effect waves-light" id = "searchBtn">Search
@@ -28,7 +28,7 @@
         </div>
       <!--NEW-->
 
-        
+
         <div class="input-field col s12">
           <i class="material-icons prefix">account_circle</i>
           <input id="firstName" type="text" class="validate">
@@ -38,6 +38,11 @@
           <i class="material-icons prefix"></i>
           <input id="lastName" type="text" class="validate">
           <label for="lastName">Last Name</label>
+        </div>
+        <div class="input-field col s12">
+          <i class="material-icons prefix"></i>
+          <input id="dateOfBirth" type="text" class="validate">
+          <label for="dateOfBirth">DOB</label>
         </div>
         <div class="input-field col s12">
           <i class="material-icons prefix"></i>
@@ -53,23 +58,25 @@
       </div><!-- END ROW-->
     </div> <!--END CONTAINER-->
 
-     
+
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
     var firstNameBox = document.getElementById("firstName");
     var lastNameBox = document.getElementById("lastName");
+    var dateOfBirthBox = document.getElementById("dateOfBirth");
     var notesBox = document.getElementById("notes");
     //add here 1
     document.getElementById("btn").addEventListener("click",addRecord);
     document.getElementById("searchBtn").addEventListener("click",searchTrigger);
-       
+
     function searchTrigger(){
       google.script.run.searchForm();
       }
     function addRecord(){
        var nameF = firstNameBox.value;
        var nameL= lastNameBox.value;
+       var dob = dateOfBirthBox.value;
        var workerNotes = notesBox.value;
        //add here if required 1.1
        if (nameF.trim().length == 0 || nameL.trim().length==0){//add here if required 1.2
@@ -77,29 +84,29 @@
          //handle error
          M.toast ({html: 'First & Last name are required'});
        } else{
-       var data = {
-         nameF: firstNameBox.value,
-         nameL: lastNameBox.value,
-         workerNotes: notesBox.value
-         //add here 2 
-       };
-      
+         var data = {
+          nameF: firstNameBox.value,
+          nameL: lastNameBox.value,
+          dob: dateOfBirthBox.value,
+          workerNotes: notesBox.value
+          //add here 2
+         };
 
-       google.script.run.appendData(data);
-       firstNameBox.value="";
-       lastNameBox.value="";
-       notesBox.value="";
-       
-       //add here 3
-        M.toast ({html: 'New Entry Added'});
+         google.script.run.appendData(data);
+         firstNameBox.value="";
+         lastNameBox.value="";
+         dateOfBirthBox.value="";
+         notesBox.value="";
 
+         //add here 3
+         M.toast ({html: 'New Entry Added'});
        }//CLOSE ELSE
     }//CLOSE ADD RECORD
 
-    
-    
-    
+
+
+
     </script>
     </body>
   </html>
-        
+
