@@ -69,9 +69,9 @@ function normalizeValues(range) {
 
 function getData(){
   var datasheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  var rowBound = datasheet.getLastRow()-2;
+  var rowBound = datasheet.getLastRow();
   var columnBound = 5;//datasheet.getLastColumn();
-  var dataValues = datasheet.getRange(3,1,rowBound,columnBound).getValues();
+  var dataValues = datasheet.getRange(1,1,rowBound,columnBound).getValues();
   normalizeValues(dataValues);
   return dataValues;
 }
