@@ -93,6 +93,7 @@ function selectedNotation(){
   normalizeValues(selectedRange);
   return selectedRange;
 }
+
 function editData (data,arange){
   var ws = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
   var selection = ws.getRange(arange);
@@ -100,8 +101,8 @@ function editData (data,arange){
 }
 
 function deleteCells(arange) {
- var ws = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet()
- var lastRow = ws.getLastRow();
+  var ws = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet()
+  var lastRow = ws.getLastRow();
   var rangeSplit = arange.split(":");
   var rangeNum = rangeSplit[0].split("A");
   var newARange = "B" + rangeNum[1] + ":" + rangeSplit[1];
@@ -147,10 +148,10 @@ function base62Encode(x) {
   // registers. So we will do division 5 4-byte words.
   const base62Chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const uint32Base = 4294967296; // This is 1 + largest 32-bit integer.
-  var result = new Uint8Array(27);
-  var rIdx = result.length - 1;
+  let result = new Uint8Array(27);
+  let rIdx = result.length - 1;
 
-  var words = x;
+  let words = x;
 
   // Divide each 4-byte word by the new base, starting with the most
   // significant. Each iteration through this loop will result in one byte of
@@ -158,18 +159,18 @@ function base62Encode(x) {
   // Values are added to the result from right to left as we build the result
   // from least to most significant base62 value.
   while (words.length > 0) {
-    var quotientWords = []; // keep the results of each division
-    var rem = 0; // The remainder of the last division.
+    let quotientWords = []; // keep the results of each division
+    let rem = 0; // The remainder of the last division.
 
     // Iterate through all of the remaining words, divide each one by our new
     // base, and carry the remainder to the next word. If we were already on
     // the last word, then that remainder is our value in the result.
-    for (var i = 0; i < words.length; i++) {
+    for (let i = 0; i < words.length; i++) {
       // The value in the numerator is the value of this word plus any
       // remainder from the previous division. The remainder must be multiplied
       // by the input's base so that the bases match for the addition.
-      var value = words[i] + rem * uint32Base;
-      var digit = Math.floor(value/62);
+      let value = words[i] + rem * uint32Base;
+      let digit = Math.floor(value/62);
       rem = value % 62;
 
       if (digit != 0 || quotientWords.length != 0) {
@@ -187,13 +188,13 @@ function base62Encode(x) {
 
   // Now that we have divided the full 20-byte number by 62, convert the resut
   // of that to a string.
-  var resultString = "";
-  for (var i=0; i<result.length; i++) {
+  let resultString = "";
+  for (let i=0; i<result.length; i++) {
     resultString = resultString+base62Chars[result[i]];
   }
 
   // When we have fewer than the full 27 characters, left-pad with "0".
-  var paddingLength = 27 - resultString.length;
+  let paddingLength = 27 - resultString.length;
   if (resultString.length < 27) {
     resultString = "0".repeat(27-resultString.length) + resultString;
   }
@@ -206,7 +207,7 @@ function base62Encode(x) {
 function makeID() {
   // This implementation generates a KSUID as described here: https://github.com/segmentio/ksuid
   // 4 bytes of timestamp followed by 16 bytes of random: 5 32-bit elements
-  var resultArray = new Uint32Array(5);
+  let resultArray = new Uint32Array(5);
 
   // Add a round number so that our IDs are valid farther into the future.
   const ksuidEpochDelta = 14e8;
