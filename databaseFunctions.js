@@ -137,6 +137,125 @@ https://www.youtube.com/watch?v=4Hz36tiqEPE
 https://www.youtube.com/watch?v=Q9aYU1Ufkpk
 */
 
+function getSheetData(sheetName) {
+  return SpreadsheetApp
+    .getActiveSpreadsheet()
+    .getSheetByName(sheetName)
+    .getDataRange()
+    .getValues();
+}
+
+function getColumnIndex(data, colName) {
+  if (data.length < 1) {
+    console.error("Data is empty");
+  }
+  let idx = data[0].indexOf(colName);
+  if (idx < 0) {
+    console.error("Missing column '"+colName+"'!");
+    return;
+  }
+  return idx;
+}
+
+// Friend
+
+class Friend {
+  constructor(id, fn, ln, dob, notes) {
+    this.id = id;
+    this.firstName = fn;
+    this.lastName = ln;
+    this.dateOfBirth = dob;
+    this.notes = notes;
+  }
+}
+
+function getFriendByID(fID) {
+  let data = getSheetData("Friends");
+  let idIdx = getColumnIndex(data, "ID");
+  let fnIdx = getColumnIndex(data, "FirstName");
+  let lnIdx = getColumnIndex(data, "LastName");
+  let dobIdx = getColumnIndex(data, "DateOfBirth");
+  let nIdx = getColumnIndex(data, "Notes");
+
+  // Find the row that matches this ID
+  let row = data.find(function(r) {
+    return r[idIdx] == fID;
+  });
+
+  if (typeof row == 'undefined') {
+    console.error("No Friend with ID '"+fID+"'!");
+    return;
+  }
+
+  return new Friend(
+    row[idIdx],
+    row[fnIdx],
+    row[lnIdx],
+    row[dobIdx],
+    row[nIdx]
+  );
+}
+
+// Document
+
+class Document {
+  constructor(id, fID, type, status, link, modifiedAt) {
+    this.id = id;
+    this.friendID = fID;
+    this.docType = type; // 'type' is reserved
+    this.docStatus = status; // 'status' is reserved
+    this.link = link;
+    this.modifiedAt = modifiedAt;
+  }
+}
+
+function getDocumentsByFriendID(fID) {
+  let data = getSheetData("Documents");
+  let idIdx = getColumnIndex(data, "ID");
+  let fIDIdx = getColumnIndex(data, "FriendID");
+  let tIdx = getColumnIndex(data, "Type");
+  let sIdx = getColumnIndex(data, "Status");
+  let lIdx = getColumnIndex(data, "Hyperlink");
+  let mIdx = getColumnIndex(data, "ModifiedAt");
+
+  // Find the rows that matche this Friend ID
+  let filtered = data
+    .filter(function(r) {
+      return r[fIDIdx] == fID;
+    });
+  let mapped = filtered
+  .map(function(r) {
+      return new Document(
+        r[idIdx],
+        r[fIDIdx],
+        r[tIdx],
+        r[sIdx],
+        r[lIdx],
+        r[mIdx]
+      );
+    });
+    return mapped;
+}
+
+// Document Demo
+
+function documentDemo(fID) {
+  let friend = getFriendByID(fID);
+  let documents = getDocumentsByFriendID(fID);
+
+  console.log("Friend: "+friend.firstName+" "+friend.lastName+": [");
+  documents.forEach(function(d) {
+    console.log("  Document: A '"+d.docType+"' that is '"+d.docStatus+"' as of '"+d.modifiedAt.toLocaleDateString()+"', Link: "+d.link);
+  });
+  console.log("]");
+}
+
+documentDemo(4);
+documentDemo(6);
+
+
+// KSUID Implementation
+
 // Encodes an array of 32-bit unsigned integers to a Base-62 string.
 // The 62 possible characters are the numbers (0-9) and the alphabet's
 // lowercase (a-z) and uppercase (A-Z) characters.
